@@ -27,7 +27,7 @@ public class GolfScoreDB implements GolfScoreDAO {
 			ps.setInt(4, score.getBack9Score());
 			ps.setInt(5, score.getTotalScore());
 			ps.setDouble(6, score.getRating());
-			ps.setDouble(7, score.getSlope());
+			ps.setInt(7, score.getSlope());
 			ps.setDouble(8, score.getDifferential());
 			ps.executeUpdate();
 		}
