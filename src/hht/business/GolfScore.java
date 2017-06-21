@@ -1,6 +1,8 @@
 package hht.business;
 
 import java.io.Serializable;
+import java.math.RoundingMode;
+import java.text.DecimalFormat;
 import java.util.Date;
 
 public class GolfScore implements Serializable {
@@ -116,7 +118,11 @@ public class GolfScore implements Serializable {
 	{
 		double diff = 0.0;
 		
-		diff = (getTotalScore() - getRating()) * 113 / getSlope();
+		DecimalFormat df = new DecimalFormat("#.#");
+		df.setRoundingMode(RoundingMode.HALF_UP);
+		double d = (getTotalScore() - getRating()) * 113 / getSlope();
+		String diffString = df.format(d);
+		diff = Double.parseDouble(diffString);
 		setDifferential(diff);
 		return diff;
 	}
