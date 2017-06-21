@@ -54,6 +54,7 @@ public class AddScoreServlet extends HttpServlet {
 		
 		// Calculate the differential
 		gs.calculateDifferential();
+		
 		System.out.println("Information about the round...");
 		System.out.println("Date:" + "\t" + datePlayed);
 		System.out.println("Course:" +"\t" + course);
