@@ -3,6 +3,7 @@ package hht.business;
 import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
 import java.util.Date;
 
 public class GolfScore implements Serializable {
@@ -125,5 +126,28 @@ public class GolfScore implements Serializable {
 		diff = Double.parseDouble(diffString);
 		setDifferential(diff);
 		return diff;
+	}
+	
+	public static double calculateHandicap(ArrayList<GolfScore> scores)
+	{
+		double hcp = 0.0;
+		double sumDiffs = 0.0;
+		
+		DecimalFormat df = new DecimalFormat("#.#");
+		df.setRoundingMode(RoundingMode.HALF_UP);	// USGA rules for handicapping may dicate otherwise...
+
+		for (GolfScore gs : scores)
+		{
+			sumDiffs += gs.getDifferential();
+		}
+		System.out.println("Total of lowest differentials: " + sumDiffs);
+		
+		String avgString = df.format(sumDiffs / scores.size());
+		double average = Double.parseDouble(avgString);
+		System.out.println("Average: " + average);
+		
+		String hcpString = df.format(average * .96);
+		hcp = Double.parseDouble(hcpString);
+		return hcp;
 	}
 }
