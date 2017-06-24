@@ -7,4 +7,5 @@ import hht.business.GolfScore;
 public interface GolfScoreReader {
 
 	ArrayList<GolfScore> getAllScores();
+	ArrayList<GolfScore> getLast20Scores();
 }

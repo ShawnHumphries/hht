@@ -45,7 +45,7 @@ public class GolfScoreDB implements GolfScoreDAO {
 		golfScores = new ArrayList<>();
 		String sql = "SELECT ID, Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential " 
 				+ "from golf_scores "
-				+ "order by Name, ID";
+				+ "order by ID DESC";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery())
@@ -64,6 +64,32 @@ public class GolfScoreDB implements GolfScoreDAO {
 		return golfScores;
 	}
 	
+	@Override
+	public ArrayList<GolfScore> getLast20Scores() {
+
+		golfScores = new ArrayList<>();
+		String sql = "SELECT ID, Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential " 
+				+ "from golf_scores "
+				+ "order by Date DESC "
+				+ "limit 20";
+        Connection connection = DBUtil.getConnection();
+        try (PreparedStatement ps = connection.prepareStatement(sql);
+                ResultSet rs = ps.executeQuery())
+        {
+        	while (rs.next())
+        	{
+        		GolfScore gs = getGolfScoreFromRow(rs);
+        		golfScores.add(gs);
+        	}
+        }
+        catch (SQLException e)
+        {
+        	System.out.println(e);
+        	return null;
+        }
+		return golfScores;
+	}
+
 	private static GolfScore getGolfScoreFromRow(ResultSet rs) throws SQLException
 	{
 		GolfScore gs = new GolfScore();
@@ -80,4 +106,5 @@ public class GolfScoreDB implements GolfScoreDAO {
 		
 		return gs;
 	}
+
 }
