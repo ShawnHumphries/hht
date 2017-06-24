@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import hht.business.GolfScore;
+import hht.db.DAOFactory;
+import hht.db.golfscore.GolfScoreDAO;
 import hht.util.StringUtil;
 
 /**
@@ -33,6 +35,8 @@ public class AddScoreServlet extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		// TODO Auto-generated method stub
 		response.getWriter().append("Served at: ").append(request.getContextPath());
+		
+		String url = "";
 
 		// get parameters from the request
 		String playedDate = request.getParameter("datePlayed");
@@ -55,14 +59,23 @@ public class AddScoreServlet extends HttpServlet {
 		// Calculate the differential
 		gs.calculateDifferential();
 		
-		System.out.println("Information about the round...");
-		System.out.println("Date:" + "\t" + datePlayed);
-		System.out.println("Course:" +"\t" + course);
-		System.out.println("Score:" + "\t" + totalScore);
-		System.out.println("Rating:" + "\t" + rating);
-		System.out.println("Slope:" + "\t" + slope);
-		System.out.println("Differential:" + "\t" + gs.getDifferential());
-		
+		// Add the score to the database
+		GolfScoreDAO gsDAO = DAOFactory.getGolfScoreDAO();
+		if (gsDAO.addScore(gs))
+		{
+			// The INSERT was successful - get all scores
+			// To do : get all scores
+			url = "/viewScores.jsp";
+		}
+		else
+		{
+			// The INSERT was unsuccessful
+			url = "/index.jsp";
+		}
+
+		getServletContext()
+        .getRequestDispatcher(url)
+        .forward(request, response);
 	}
 
 	/**
