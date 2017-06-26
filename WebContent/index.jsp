@@ -11,8 +11,8 @@
 	<br>
 	<a href="addScore.jsp">Add A Score</a>
 	<br>
-	<a href="viewScores?method=doPost">View Scores</a>
+	<a href="viewScores?action=viewScores">View Scores</a>
 	<br>
-	<a href="viewAllScores?method=doPost">View All Scores</a>
+	<a href="viewScores?action=viewAllScores">View All Scores</a>
 </body>
 </html>
