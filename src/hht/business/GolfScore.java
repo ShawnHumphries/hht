@@ -145,12 +145,10 @@ public class GolfScore implements Serializable {
 			for (int i=scores.size()-1; i >= 20; i--)
 			{
 				GolfScore gs = scores.get(i);
-				System.out.println("Removing score for " + gs.getCourse());
 				scores.remove(i);
 			}
 		}
 
-		System.out.println("New size of scores=" + scores.size());
 		// Sort the list of scores by differential
 		Collections.sort(scores, new Comparator<GolfScore>()
 		{
