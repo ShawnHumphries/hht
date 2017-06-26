@@ -2,6 +2,9 @@ package hht.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -39,6 +42,16 @@ public class ViewScoresServlet extends HttpServlet {
 		
 		GolfScoreDAO gsDAO = DAOFactory.getGolfScoreDAO();
 		ArrayList<GolfScore> golfScores = gsDAO.getAllScores();
+		
+		Collections.sort(golfScores, new Comparator<GolfScore>()
+		{
+			public int compare (GolfScore g1, GolfScore g2)
+			{
+				Double diff1 = g1.getDifferential();
+				Double diff2 = g2.getDifferential();
+				return diff1.compareTo(diff2);
+			}
+		});
 		// store GolfScore object in request
 		request.setAttribute("golfScores", golfScores);
 
