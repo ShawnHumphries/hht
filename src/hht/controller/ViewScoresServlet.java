@@ -39,27 +39,36 @@ public class ViewScoresServlet extends HttpServlet {
 		response.getWriter().append("Served at: ").append(request.getContextPath());
 		
 		String url = "";
+		ArrayList<GolfScore> golfScores = null;
 		
+		// get current action
+		String action = request.getParameter("action");
+		if (action == null) {
+			System.out.println("action was null");
+			action = "viewAllScores";
+		}
+
 		GolfScoreDAO gsDAO = DAOFactory.getGolfScoreDAO();
-		ArrayList<GolfScore> golfScores = gsDAO.getAllScores();
 		
-		Collections.sort(golfScores, new Comparator<GolfScore>()
+		if (action.equals("viewAllScores"))
 		{
-			public int compare (GolfScore g1, GolfScore g2)
-			{
-				Double diff1 = g1.getDifferential();
-				Double diff2 = g2.getDifferential();
-				return diff1.compareTo(diff2);
-			}
-		});
+			golfScores = gsDAO.getAllScores();
+		}
+		else if (action.equals("viewScores"))
+		{
+			golfScores = gsDAO.getLast20Scores();
+		}
+		
+		if (golfScores != null)
+		{
+			// Get the handicap
+			double handicap = GolfScore.calculateHandicap(golfScores);
+			// Store the handicap in the request
+			request.setAttribute("handicap", handicap);
+		}
+
 		// store GolfScore object in request
 		request.setAttribute("golfScores", golfScores);
-
-		// Get the handicap
-		double handicap = GolfScore.calculateHandicap(golfScores);
-		// Store the handicap in the request
-		request.setAttribute("handicap", handicap);
-		
 		// forward request to viewScores.jsp
         url = "/viewScores.jsp";
 
