@@ -44,7 +44,6 @@ public class ViewScoresServlet extends HttpServlet {
 		// get current action
 		String action = request.getParameter("action");
 		if (action == null) {
-			System.out.println("action was null");
 			action = "viewAllScores";
 		}
 
