@@ -57,7 +57,7 @@ public class AddScoreServlet extends HttpServlet {
 		int slope = Integer.parseInt(sSlope);
 		
 		// Create a new GolfScore object
-		GolfScore gs = new GolfScore(datePlayed, course, front9Score, back9Score, totalScore, rating, slope);
+		GolfScore gs = new GolfScore(datePlayed, course, front9Score, back9Score, totalScore, rating, slope, false);
 		
 		// Calculate the differential
 		gs.calculateDifferential();
@@ -67,14 +67,39 @@ public class AddScoreServlet extends HttpServlet {
 		if (gsDAO.addScore(gs))
 		{
 			// The INSERT was successful - get all scores
-			// To do : get all scores
-			ArrayList<GolfScore> golfScores = gsDAO.getLast20Scores();
+			ArrayList<GolfScore> golfScores = gsDAO.getAllScores();
 			if (golfScores != null)
 			{
+				for (GolfScore score : golfScores)
+				{
+					// Mark the score as not counted
+					int id = score.getId();
+					if (score.isCounted())
+					{
+						System.out.println("Update score with id = " + id + " to not be counted.");
+						gsDAO.updateCounted(id, false);
+					}
+				}
+
+				// If the list of scores has more than 20 elements, remove the extra elements
+				if (golfScores.size() > 20)
+				{
+					for (int i=golfScores.size()-1; i >= 20; i--)
+					{
+						// GolfScore score = golfScores.get(i);
+						golfScores.remove(i);
+					}
+				}
+
 				// Get the handicap
 				double handicap = GolfScore.calculateHandicap(golfScores);
+				
 				// Store the handicap in the request
 				request.setAttribute("handicap", handicap);
+
+				// Update which scores are counted in the handicap calculation
+				updateIsCounted(gsDAO, golfScores);
+				
 				// Store the scores in the request
 				request.setAttribute("golfScores", golfScores);
 			}
@@ -100,4 +125,33 @@ public class AddScoreServlet extends HttpServlet {
 		doGet(request, response);
 	}
 
+	/*
+	 * Helper method to update the DB to show which scores are being counted for the handicap calculation.
+	 * Sorts the list of scores by differential, then the IDs for the best 10 are updated.
+	 */
+	private void updateIsCounted(GolfScoreDAO gsDAO, ArrayList<GolfScore> golfScores)
+	{
+		ArrayList<GolfScore> scores = (ArrayList<GolfScore>) golfScores.clone();
+
+		// Sort the list of scores by differential
+		Collections.sort(scores, new Comparator<GolfScore>()
+		{
+			public int compare (GolfScore g1, GolfScore g2)
+			{
+				Double diff1 = g1.getDifferential();
+				Double diff2 = g2.getDifferential();
+				return diff1.compareTo(diff2);
+			}
+		});
+
+		// Loop through the 10 best differentials and set the IsCounted field to true
+		for (int i=0; i < 10; i++)
+		{
+			GolfScore gs = scores.get(i);
+			System.out.println("Score with id = " + gs.getId() + " will be counted.");
+			gs.setCounted(true);
+			gsDAO.updateCounted(gs.getId(), true);
+		}
+		
+	}
 }

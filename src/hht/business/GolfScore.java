@@ -19,6 +19,7 @@ public class GolfScore implements Serializable {
 	private double rating;
 	private int slope;
 	private double differential;
+	private boolean isCounted;
 	
 	// Default constructor
 	public GolfScore()
@@ -32,9 +33,10 @@ public class GolfScore implements Serializable {
 		rating = 0.0;
 		slope = 0;
 		differential = 0.0;
+		isCounted = false;
 	}
 	
-	public GolfScore(Date datePlayed, String course, int front9Score, int back9Score, int totalScore, double rating, int slope)
+	public GolfScore(Date datePlayed, String course, int front9Score, int back9Score, int totalScore, double rating, int slope, boolean isCounted)
 	{
 		this.datePlayed = datePlayed;
 		this.course = course;
@@ -43,6 +45,7 @@ public class GolfScore implements Serializable {
 		this.totalScore = totalScore;
 		this.rating = rating;
 		this.slope = slope;
+		this.isCounted = false;
 	}
 
 	public int getId() {
@@ -115,6 +118,22 @@ public class GolfScore implements Serializable {
 
 	public void setDifferential(double differential) {
 		this.differential = differential;
+	}
+	
+	public boolean isCounted() {
+		return isCounted;
+	}
+
+	public void setCounted(boolean isCounted) {
+		this.isCounted = isCounted;
+	}
+
+	public String convertIsCountedToString()
+	{
+		if (this.isCounted())
+			return "1";
+		else
+			return "0";
 	}
 	
 	public double calculateDifferential()
