@@ -134,15 +134,17 @@ public class GolfScore implements Serializable {
 		double sumDiffs = 0.0;
 		
 		DecimalFormat df = new DecimalFormat("#.#");
-		df.setRoundingMode(RoundingMode.HALF_UP);	// USGA rules for handicapping may dicate otherwise...
+		df.setRoundingMode(RoundingMode.HALF_UP);	// USGA rules for handicapping may dictate otherwise...
 
-		for (GolfScore gs : scores)
+		// The array list of scores has already been sorted by differential before entering this method
+		for (int i=0; i < 10; i++)
 		{
+			GolfScore gs = scores.get(i);
 			sumDiffs += gs.getDifferential();
 		}
-		System.out.println("Total of lowest differentials: " + sumDiffs);
+		System.out.println("Total of lowest 10 differentials: " + sumDiffs);
 		
-		String avgString = df.format(sumDiffs / scores.size());
+		String avgString = df.format(sumDiffs / 10);
 		double average = Double.parseDouble(avgString);
 		System.out.println("Average: " + average);
 		
@@ -150,4 +152,5 @@ public class GolfScore implements Serializable {
 		hcp = Double.parseDouble(hcpString);
 		return hcp;
 	}
+
 }
