@@ -17,7 +17,7 @@ public class GolfScoreDB implements GolfScoreDAO {
 	@Override
 	public boolean addScore(GolfScore score) {
 
-		String sql = "INSERT INTO golf_scores (Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential) VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String sql = "INSERT INTO golf_scores (Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential, IsCounted) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)";
 		Connection connection = DBUtil.getConnection();
 		try (PreparedStatement ps = connection.prepareStatement(sql))
 		{
@@ -29,6 +29,7 @@ public class GolfScoreDB implements GolfScoreDAO {
 			ps.setDouble(6, score.getRating());
 			ps.setInt(7, score.getSlope());
 			ps.setDouble(8, score.getDifferential());
+			ps.setBoolean(9, score.isCounted());
 			ps.executeUpdate();
 		}
 		catch (SQLException e)
@@ -43,7 +44,7 @@ public class GolfScoreDB implements GolfScoreDAO {
 	public ArrayList<GolfScore> getAllScores() {
 
 		golfScores = new ArrayList<>();
-		String sql = "SELECT ID, Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential " 
+		String sql = "SELECT ID, Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential, IsCounted " 
 				+ "from golf_scores "
 				+ "order by ID DESC";
         Connection connection = DBUtil.getConnection();
@@ -68,7 +69,7 @@ public class GolfScoreDB implements GolfScoreDAO {
 	public ArrayList<GolfScore> getLast20Scores() {
 
 		golfScores = new ArrayList<>();
-		String sql = "SELECT ID, Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential " 
+		String sql = "SELECT ID, Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential, IsCounted " 
 				+ "from golf_scores "
 				+ "order by Date DESC "
 				+ "limit 20";
@@ -90,6 +91,25 @@ public class GolfScoreDB implements GolfScoreDAO {
 		return golfScores;
 	}
 
+	@Override
+	public boolean updateCounted(int id, boolean isCounted) {
+
+		String updateSql = "UPDATE golf_scores SET IsCounted = ? WHERE ID = ?";
+		Connection connection = DBUtil.getConnection();
+		try (PreparedStatement ps = connection.prepareStatement(updateSql))
+		{
+        	ps.setBoolean(1, isCounted);
+        	ps.setInt(2, id);
+			ps.executeUpdate();
+		}
+		catch (SQLException e)
+		{
+			System.out.println(e);
+			return false;
+		}
+		return true;
+	}
+
 	private static GolfScore getGolfScoreFromRow(ResultSet rs) throws SQLException
 	{
 		GolfScore gs = new GolfScore();
@@ -103,6 +123,7 @@ public class GolfScoreDB implements GolfScoreDAO {
 		gs.setRating(rs.getDouble("Rating"));
 		gs.setSlope(rs.getInt("Slope"));
 		gs.setDifferential(rs.getDouble("Differential"));
+		gs.setCounted(rs.getBoolean("IsCounted"));
 		
 		return gs;
 	}
