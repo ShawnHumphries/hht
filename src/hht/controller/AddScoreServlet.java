@@ -2,6 +2,9 @@ package hht.controller;
 
 import java.io.IOException;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -65,6 +68,17 @@ public class AddScoreServlet extends HttpServlet {
 		{
 			// The INSERT was successful - get all scores
 			// To do : get all scores
+			ArrayList<GolfScore> golfScores = gsDAO.getLast20Scores();
+			if (golfScores != null)
+			{
+				// Get the handicap
+				double handicap = GolfScore.calculateHandicap(golfScores);
+				// Store the handicap in the request
+				request.setAttribute("handicap", handicap);
+				// Store the scores in the request
+				request.setAttribute("golfScores", golfScores);
+			}
+			
 			url = "/viewScores.jsp";
 		}
 		else
