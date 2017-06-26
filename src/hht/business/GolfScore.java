@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.math.RoundingMode;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.Date;
 
 public class GolfScore implements Serializable {
@@ -128,15 +130,38 @@ public class GolfScore implements Serializable {
 		return diff;
 	}
 	
-	public static double calculateHandicap(ArrayList<GolfScore> scores)
+	public static double calculateHandicap(ArrayList<GolfScore> golfScores)
 	{
 		double hcp = 0.0;
 		double sumDiffs = 0.0;
+		ArrayList<GolfScore> scores = (ArrayList<GolfScore>) golfScores.clone();
 		
 		DecimalFormat df = new DecimalFormat("#.#");
 		df.setRoundingMode(RoundingMode.HALF_UP);	// USGA rules for handicapping may dictate otherwise...
+		
+		// If the list of scores has more than 20 elements, remove the extra elements
+		if (scores.size() > 20)
+		{
+			for (int i=scores.size()-1; i >= 20; i--)
+			{
+				GolfScore gs = scores.get(i);
+				System.out.println("Removing score for " + gs.getCourse());
+				scores.remove(i);
+			}
+		}
 
-		// The array list of scores has already been sorted by differential before entering this method
+		System.out.println("New size of scores=" + scores.size());
+		// Sort the list of scores by differential
+		Collections.sort(scores, new Comparator<GolfScore>()
+		{
+			public int compare (GolfScore g1, GolfScore g2)
+			{
+				Double diff1 = g1.getDifferential();
+				Double diff2 = g2.getDifferential();
+				return diff1.compareTo(diff2);
+			}
+		});
+
 		for (int i=0; i < 10; i++)
 		{
 			GolfScore gs = scores.get(i);
