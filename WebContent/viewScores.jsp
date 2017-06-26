@@ -26,5 +26,7 @@
 	</table>
 	<br>
 	<p>"Humphries' Handicap Index": ${handicap}</p>
+	<br>
+	<a href="index.jsp">Back To The Home Page</a>
 </body>
 </html>
