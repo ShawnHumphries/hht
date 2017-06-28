@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-<title>My Scores</title>
+<title>My Scores</title> 
+<link rel="stylesheet" type="text/css" href="styles/hht.css">
 </head>
 <body>
 	<h2>Scoring Record:</h2>
@@ -18,12 +19,12 @@
 			<c:choose>
 				<c:when test="${golfScore.convertIsCountedToString() == '1'}">
 					<tr>
-						<td><span style="color:#bfac03">${golfScore.datePlayed}</span></td>
-						<td><span style="color:#bfac03">${golfScore.course}</span></td>
-						<td><span style="color:#bfac03">${golfScore.front9Score}-${golfScore.back9Score}-${golfScore.totalScore}</span></td>
-						<td><span style="color:#bfac03">${golfScore.rating}</span></td>
-						<td><span style="color:#bfac03">${golfScore.slope}</span></td>
-						<td><span style="color:#bfac03">${golfScore.differential}</span></td>
+						<td><span>${golfScore.datePlayed}</span></td>
+						<td><span>${golfScore.course}</span></td>
+						<td><span>${golfScore.front9Score}-${golfScore.back9Score}-${golfScore.totalScore}</span></td>
+						<td><span>${golfScore.rating}</span></td>
+						<td><span>${golfScore.slope}</span></td>
+						<td><span>${golfScore.differential}</span></td>
 					</tr>
 				</c:when>
 				<c:otherwise>
