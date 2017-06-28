@@ -19,12 +19,12 @@
 			<c:choose>
 				<c:when test="${golfScore.convertIsCountedToString() == '1'}">
 					<tr>
-						<td><span>${golfScore.datePlayed}</span></td>
-						<td><span>${golfScore.course}</span></td>
-						<td><span>${golfScore.front9Score}-${golfScore.back9Score}-${golfScore.totalScore}</span></td>
-						<td><span>${golfScore.rating}</span></td>
-						<td><span>${golfScore.slope}</span></td>
-						<td><span>${golfScore.differential}</span></td>
+						<td class="countedScore">${golfScore.datePlayed}</td>
+						<td class="countedScore">${golfScore.course}</td>
+						<td class="countedScore">${golfScore.front9Score}-${golfScore.back9Score}-${golfScore.totalScore}</td>
+						<td class="countedScore">${golfScore.rating}</td>
+						<td class="countedScore">${golfScore.slope}</td>
+						<td class="countedScore">${golfScore.differential}</td>
 					</tr>
 				</c:when>
 				<c:otherwise>
