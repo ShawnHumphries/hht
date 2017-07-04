@@ -2,9 +2,6 @@ package hht.controller;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Comparator;
-import java.util.List;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -15,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import hht.business.GolfScore;
 import hht.db.DAOFactory;
 import hht.db.golfscore.GolfScoreDAO;
+import hht.util.HandicapCalculator;
 
 /**
  * Servlet implementation class ViewScoresServlet
@@ -62,7 +60,7 @@ public class ViewScoresServlet extends HttpServlet {
 		if (golfScores != null)
 		{
 			// Get the handicap
-			double handicap = GolfScore.calculateHandicap(golfScores);
+			double handicap = HandicapCalculator.calculateHandicap(golfScores);
 			// Store the handicap in the request
 			request.setAttribute("handicap", handicap);
 		}

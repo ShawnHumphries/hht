@@ -15,6 +15,7 @@ import javax.servlet.http.HttpServletResponse;
 import hht.business.GolfScore;
 import hht.db.DAOFactory;
 import hht.db.golfscore.GolfScoreDAO;
+import hht.util.HandicapCalculator;
 import hht.util.StringUtil;
 
 /**
@@ -92,7 +93,7 @@ public class AddScoreServlet extends HttpServlet {
 				}
 
 				// Get the handicap
-				double handicap = GolfScore.calculateHandicap(golfScores);
+				double handicap = HandicapCalculator.calculateHandicap(golfScores);
 				
 				// Store the handicap in the request
 				request.setAttribute("handicap", handicap);
