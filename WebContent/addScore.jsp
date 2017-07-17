@@ -10,24 +10,27 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"></head>
 </head>
 <body>
-	<h2>Add A Score</h2>
-	<form action="addScore" method="post">
-		Date: 
-		<input type="date" name="datePlayed" id="datePicker">
-		<br>
-		Course: <input type="text" name="course">
-		<br>
-		Front 9 Score: <input type="text" name="front9Score">
-		<br>
-		Back 9 Score: <input type="text" name="back9Score">
-		<br>
-		Total Score: <input type="text" name="totalScore">
-		<br>
-		Rating: <input type="text" name="rating">
-		<br>
-		Slope: <input type="text" name="slope">
-		<br>
-		<button type="submit">Add Score</button>
-	</form>
+	<div class="container">
+		<h2>Add A Score</h2>
+		<form class="form-horizontal" action="addScore" method="post">
+				<div class="form-group">
+				    <label for="datePicker">Date: </label>
+				    <input type="date" class="form-control" id="datePicker" name="datePlayed">
+					<label for="course">Course: </label>
+					<input type="text" class="form-control" id="course" name="course">
+					<label for="front9Score">Front 9 Score: </label>
+					<input type="text" class="form-control" id="front9Score" name="front9Score">
+					<label for="back9Score">Back 9 Score: </label>
+					<input type="text" class="form-control" id="back9Score" name="back9Score">
+					<label for="totalScore">Total Score: </label>
+					<input type="text" class="form-control" id="totalScore" name="totalScore">
+					<label for="rating">Rating: </label>
+					<input type="text" class="form-control" id="rating" name="rating">
+					<label for="slope">Slope: </label>
+					<input type="text" class="form-control" id="slope" name="slope">
+					<button type="submit" class="btn btn-default">Add Score</button>
+				</div>
+		</form>
+	</div>
 </body>
 </html>
