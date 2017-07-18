@@ -12,25 +12,29 @@
 <body>
 	<div class="container">
 		<h2>Add A Score</h2>
-		<form class="form-horizontal" action="addScore" method="post">
-				<div class="form-group">
-				    <label for="datePicker">Date: </label>
-				    <input type="date" class="form-control" id="datePicker" name="datePlayed">
-					<label for="course">Course: </label>
-					<input type="text" class="form-control" id="course" name="course">
-					<label for="front9Score">Front 9 Score: </label>
-					<input type="text" class="form-control" id="front9Score" name="front9Score">
-					<label for="back9Score">Back 9 Score: </label>
-					<input type="text" class="form-control" id="back9Score" name="back9Score">
-					<label for="totalScore">Total Score: </label>
-					<input type="text" class="form-control" id="totalScore" name="totalScore">
-					<label for="rating">Rating: </label>
-					<input type="text" class="form-control" id="rating" name="rating">
-					<label for="slope">Slope: </label>
-					<input type="text" class="form-control" id="slope" name="slope">
-					<button type="submit" class="btn btn-default">Add Score</button>
-				</div>
-		</form>
+		<div class="row">
+			<div class="col-lg-4 col-sm-6 col-xs-6">
+				<form class="form-horizontal" action="addScore" method="post">
+						<div class="form-group">
+						    <label for="datePicker">Date: </label>
+						    <input type="date" class="form-control" id="datePicker" name="datePlayed">
+							<label for="course">Course: </label>
+							<input type="text" class="form-control" id="course" name="course">
+							<label for="front9Score">Front 9 Score: </label>
+							<input type="text" class="form-control" id="front9Score" name="front9Score">
+							<label for="back9Score">Back 9 Score: </label>
+							<input type="text" class="form-control" id="back9Score" name="back9Score">
+							<label for="totalScore">Total Score: </label>
+							<input type="text" class="form-control" id="totalScore" name="totalScore">
+							<label for="rating">Rating: </label>
+							<input type="text" class="form-control" id="rating" name="rating">
+							<label for="slope">Slope: </label>
+							<input type="text" class="form-control" id="slope" name="slope">
+							<button type="submit" class="btn btn-default">Add Score</button>
+						</div>
+				</form>
+			</div>
+		</div>
 	</div>
 </body>
 </html>
