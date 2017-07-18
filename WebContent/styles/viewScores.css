@@ -1,0 +1,20 @@
+table {
+	border-collapse: collapse;
+}
+
+table, th, td {
+	border: 1px solid black;
+	/* padding-left 2em; */
+	/* text-align: left; */
+}
+
+td {
+	padding-top: 1px;
+	padding-left: 1px;
+	padding-right: 1px;
+	padding-bottom: 1px;
+}
+
+.countedScore {
+	color: #21b72b;
+}
