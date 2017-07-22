@@ -46,7 +46,7 @@ public class GolfScoreDB implements GolfScoreDAO {
 		golfScores = new ArrayList<>();
 		String sql = "SELECT ID, Date, Course, Front9Score, Back9Score, TotalScore, Rating, Slope, Differential, IsCounted " 
 				+ "from golf_scores "
-				+ "order by ID DESC";
+				+ "order by Date DESC";
         Connection connection = DBUtil.getConnection();
         try (PreparedStatement ps = connection.prepareStatement(sql);
                 ResultSet rs = ps.executeQuery())
